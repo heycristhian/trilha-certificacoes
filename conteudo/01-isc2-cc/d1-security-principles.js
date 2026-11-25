@@ -30,7 +30,7 @@ window.MODULO = {
   <div class="degrau surge d4"><b>1.4</b> Controles: técnicos, administrativos, físicos</div>
   <div class="degrau surge d5"><b>1.5</b> Ética: due care, due diligence, código da ISC2</div>
 </div>
-<div class="nota">A prova é em <b>inglês</b>. Por isso os termos aparecem nos dois idiomas, e as perguntas da prova deste módulo são em inglês.</div>
+<div class="nota">A prova é em <b>inglês</b>. Por isso os termos aparecem nos dois idiomas, e as perguntas (as checagens no meio da lição e a prova) são em inglês. As explicações continuam em português.</div>
 <p class="pequeno">Dica de foco: faça uma parte, respire, faça a próxima. Seu progresso fica salvo, dá para parar e voltar depois.</p>`
     },
 
@@ -57,12 +57,12 @@ window.MODULO = {
 </table></div>
 <div class="prova-dica">o contrário da CIA às vezes aparece como <b>DAD</b>: Disclosure, Alteration, Destruction.</div>`,
       checagem: {
-        q: "Um atacante muda o valor de uma transferência de R$ 100 para R$ 10.000 antes de ela ser gravada. Qual objetivo foi violado?",
+        q: "An attacker changes a transfer amount from $100 to $10,000 before it is recorded. Which security objective was violated?",
         opcoes: [
-          { t: "Integridade", ok: true, porque: "O dado foi alterado sem autorização. Isso é ataque à integridade." },
-          { t: "Confidencialidade", porque: "Ninguém precisou ver o dado para alterá-lo. O problema não é divulgação." },
-          { t: "Disponibilidade", porque: "O sistema continuou funcionando. O dado só ficou errado." },
-          { t: "Não repúdio", porque: "Não repúdio é sobre provar quem fez algo. Aqui o problema é a alteração em si." }
+          { t: "Integrity", ok: true, porque: "O dado foi alterado sem autorização. Isso é ataque à integridade." },
+          { t: "Confidentiality", porque: "Ninguém precisou ver o dado para alterá-lo. O problema não é divulgação." },
+          { t: "Availability", porque: "O sistema continuou funcionando. O dado só ficou errado." },
+          { t: "Non-repudiation", porque: "Não repúdio é sobre provar quem fez algo. Aqui o problema é a alteração em si." }
         ]
       }
     },
@@ -93,12 +93,12 @@ window.MODULO = {
 <div class="prova-dica"><b>MFA</b> exige fatores de <b>tipos diferentes</b>. Senha + PIN são dois "algo que você sabe", então <b>não</b> é MFA.</div>
 <div class="ponte">o PingFederate autentica o usuário; o PingAccess decide se a requisição pode passar (autorização); os logs dos dois são o accounting.</div>`,
       checagem: {
-        q: "Qual combinação é MFA de verdade?",
+        q: "Which combination is TRUE multi-factor authentication?",
         opcoes: [
-          { t: "Senha + código enviado ao celular cadastrado", ok: true, porque: "Algo que você sabe (senha) + algo que você tem (celular). Dois tipos diferentes." },
-          { t: "Senha + pergunta de segurança", porque: "As duas são algo que você sabe. É autenticação em duas etapas, mas com um tipo só de fator." },
-          { t: "Senha + PIN", porque: "Dois fatores do mesmo tipo (conhecimento) não formam MFA." },
-          { t: "Usuário + senha", porque: "O usuário é identificação, não autenticação. Só a senha autentica." }
+          { t: "Password + code sent to the registered phone", ok: true, porque: "Algo que você sabe (senha) + algo que você tem (celular). Dois tipos diferentes." },
+          { t: "Password + security question", porque: "As duas são algo que você sabe. É autenticação em duas etapas, mas com um tipo só de fator." },
+          { t: "Password + PIN", porque: "Dois fatores do mesmo tipo (conhecimento) não formam MFA." },
+          { t: "Username + password", porque: "O usuário é identificação, não autenticação. Só a senha autentica." }
         ]
       }
     },
@@ -117,12 +117,12 @@ window.MODULO = {
 <div class="prova-dica">se a pergunta fala em "provar quem enviou" ou "o remetente não pode negar", a resposta é <b>non-repudiation</b>, normalmente via <b>digital signature</b>. Criptografia simétrica sozinha não dá não repúdio, porque os dois lados têm a mesma chave.</div>
 <div class="ponte">um JWT assinado com RS256 tem esse efeito: só quem tem a chave privada do emissor consegue gerar aquela assinatura.</div>`,
       checagem: {
-        q: "Uma equipe de suporte usa a mesma conta de administrador. Qual princípio fica mais prejudicado?",
+        q: "A support team shares a single administrator account. Which principle is MOST affected?",
         opcoes: [
-          { t: "Não repúdio (e accounting)", ok: true, porque: "Com conta compartilhada, os logs não mostram qual pessoa agiu. Ninguém pode ser responsabilizado." },
-          { t: "Disponibilidade", porque: "A conta compartilhada não derruba nenhum sistema." },
-          { t: "Integridade", porque: "Pode até facilitar alterações indevidas, mas o efeito direto é perder a ligação ação ↔ pessoa." },
-          { t: "Privacidade", porque: "Privacidade trata de dados pessoais de titulares, não de quem operou o sistema." }
+          { t: "Non-repudiation (and accounting)", ok: true, porque: "Com conta compartilhada, os logs não mostram qual pessoa agiu. Ninguém pode ser responsabilizado." },
+          { t: "Availability", porque: "A conta compartilhada não derruba nenhum sistema." },
+          { t: "Integrity", porque: "Pode até facilitar alterações indevidas, mas o efeito direto é perder a ligação ação ↔ pessoa." },
+          { t: "Privacy", porque: "Privacidade trata de dados pessoais de titulares, não de quem operou o sistema." }
         ]
       }
     },
@@ -168,12 +168,12 @@ window.MODULO = {
 </svg>
 <div class="prova-dica">a gente controla as <b>vulnerabilidades</b> (corrigindo), mas quase nunca controla as <b>ameaças</b>. Sem vulnerabilidade ou sem ameaça, não há risco.</div>`,
       checagem: {
-        q: "\"Senhas guardadas em texto puro no banco\" é exemplo de quê?",
+        q: "\"Passwords stored in plaintext in the database\" is an example of what?",
         opcoes: [
-          { t: "Vulnerabilidade", ok: true, porque: "É uma fraqueza do sistema, que alguém pode explorar." },
-          { t: "Ameaça", porque: "A ameaça seria o atacante que rouba e usa essas senhas." },
-          { t: "Impacto", porque: "O impacto é a consequência (contas invadidas), não a fraqueza." },
-          { t: "Ativo", porque: "O ativo é o que se protege (as contas, o banco). O texto puro é a fraqueza dele." }
+          { t: "Vulnerability", ok: true, porque: "É uma fraqueza do sistema, que alguém pode explorar." },
+          { t: "Threat", porque: "A ameaça seria o atacante que rouba e usa essas senhas." },
+          { t: "Impact", porque: "O impacto é a consequência (contas invadidas), não a fraqueza." },
+          { t: "Asset", porque: "O ativo é o que se protege (as contas, o banco). O texto puro é a fraqueza dele." }
         ]
       }
     },
@@ -219,12 +219,12 @@ window.MODULO = {
 </ul>
 <div class="prova-dica">transferir <b>não</b> elimina o risco. O seguro paga o prejuízo, mas o vazamento e o dano à reputação continuam sendo seus. E ignorar o risco não é "aceitar": aceitar é uma decisão documentada da gestão.</div>`,
       checagem: {
-        q: "A empresa contratou um seguro contra ataques de ransomware. Que tratamento de risco é esse?",
+        q: "The company buys insurance against ransomware attacks. Which risk treatment is this?",
         opcoes: [
-          { t: "Transferência", ok: true, porque: "O impacto financeiro passa para a seguradora." },
-          { t: "Mitigação", porque: "O seguro não reduz a chance do ataque nem o dano técnico. Mitigar seria, por exemplo, ter backup offline." },
-          { t: "Aceitação", porque: "Aceitar seria não fazer nada de forma consciente. Aqui houve uma ação." },
-          { t: "Evitar", porque: "Evitar seria parar a atividade que gera o risco." }
+          { t: "Transference", ok: true, porque: "O impacto financeiro passa para a seguradora." },
+          { t: "Mitigation", porque: "O seguro não reduz a chance do ataque nem o dano técnico. Mitigar seria, por exemplo, ter backup offline." },
+          { t: "Acceptance", porque: "Aceitar seria não fazer nada de forma consciente. Aqui houve uma ação." },
+          { t: "Avoidance", porque: "Evitar seria parar a atividade que gera o risco." }
         ]
       }
     },
@@ -252,7 +252,7 @@ window.MODULO = {
 <tr><td><b>Guideline</b></td><td>Uma recomendação, não obrigatória</td><td>"Prefira gerenciador de senhas"</td></tr>
 </table></div>`,
       checagem: {
-        q: "\"Para revogar o acesso de um funcionário desligado: 1) desative a conta, 2) revogue os tokens, 3) registre o chamado.\" Que documento é este?",
+        q: "\"To revoke a terminated employee's access: 1) disable the account, 2) revoke the tokens, 3) log the ticket.\" What type of document is this?",
         opcoes: [
           { t: "Procedure", ok: true, porque: "É um passo a passo de como executar uma tarefa." },
           { t: "Policy", porque: "Uma política diria o quê e por quê ('acessos de desligados devem ser revogados em 24h'), sem os passos." },
@@ -307,12 +307,12 @@ window.MODULO = {
 <li><b>Compensating:</b> substitui um controle que não dá para aplicar (monitorar de perto um sistema legado que não aceita MFA).</li>
 </ul>`,
       checagem: {
-        q: "Um treinamento anual obrigatório sobre phishing é um controle de que tipo?",
+        q: "Mandatory annual phishing awareness training is which type of control?",
         opcoes: [
-          { t: "Administrativo", ok: true, porque: "É um processo voltado a pessoas, definido pela gestão." },
-          { t: "Técnico", porque: "Um filtro de e-mail seria técnico. O treinamento atua nas pessoas." },
-          { t: "Físico", porque: "Não há barreira física envolvida." },
-          { t: "Corretivo", porque: "Corretivo é uma função, não um tipo. E o treinamento age antes do problema (preventivo)." }
+          { t: "Administrative", ok: true, porque: "É um processo voltado a pessoas, definido pela gestão." },
+          { t: "Technical", porque: "Um filtro de e-mail seria técnico. O treinamento atua nas pessoas." },
+          { t: "Physical", porque: "Não há barreira física envolvida." },
+          { t: "Corrective", porque: "Corretivo é uma função, não um tipo. E o treinamento age antes do problema (preventivo)." }
         ]
       }
     },
@@ -340,12 +340,12 @@ window.MODULO = {
 </ul>
 <div class="prova-dica">se a empresa não fez o que qualquer empresa razoável faria e houve um incidente, ela pode ser acusada de <b>negligência</b>: faltou due care.</div>`,
       checagem: {
-        q: "Antes de contratar um provedor de nuvem, o time revisa os relatórios de auditoria e as certificações dele. Isso é:",
+        q: "Before hiring a cloud provider, the team reviews its audit reports and certifications. This is an example of:",
         opcoes: [
           { t: "Due diligence", ok: true, porque: "É investigação feita antes da decisão: conhecer o risco." },
           { t: "Due care", porque: "Due care seria manter os controles funcionando depois da contratação." },
-          { t: "Aceitação de risco", porque: "Ainda nem houve decisão sobre o risco. O time está levantando informação." },
-          { t: "Controle compensatório", porque: "Não há nenhum controle substituindo outro aqui." }
+          { t: "Risk acceptance", porque: "Ainda nem houve decisão sobre o risco. O time está levantando informação." },
+          { t: "Compensating control", porque: "Não há nenhum controle substituindo outro aqui." }
         ]
       }
     },
@@ -370,12 +370,12 @@ window.MODULO = {
 <div class="prova-dica">em perguntas de dilema ético, procure a alternativa que protege as pessoas e a sociedade, e que é honesta e legal. Desconfie de respostas que "resolvem" escondendo informação, ou que agem por conta própria fora da lei (por exemplo, "invadir o sistema do atacante").</div>
 <p class="pequeno">Texto oficial completo: página "ISC2 Code of Ethics" no site da ISC2.</p>`,
       checagem: {
-        q: "Qual cânone tem a MAIOR prioridade?",
+        q: "Which canon of the ISC2 Code of Ethics has the HIGHEST priority?",
         opcoes: [
-          { t: "Proteger a sociedade, o bem comum e a infraestrutura", ok: true, porque: "É o primeiro cânone e prevalece sobre os outros em caso de conflito." },
-          { t: "Prestar serviço diligente e competente aos principals", porque: "É o terceiro. Atender o empregador vem depois de proteger a sociedade e de agir com honestidade." },
-          { t: "Promover e proteger a profissão", porque: "É o quarto, o de menor prioridade." },
-          { t: "Agir com honra, honestidade, justiça e legalidade", porque: "É o segundo. Importante, mas vem depois do primeiro." }
+          { t: "Protect society, the common good, necessary public trust and confidence, and the infrastructure", ok: true, porque: "É o primeiro cânone e prevalece sobre os outros em caso de conflito." },
+          { t: "Provide diligent and competent service to principals", porque: "É o terceiro. Atender o empregador vem depois de proteger a sociedade e de agir com honestidade." },
+          { t: "Advance and protect the profession", porque: "É o quarto, o de menor prioridade." },
+          { t: "Act honorably, honestly, justly, responsibly, and legally", porque: "É o segundo. Importante, mas vem depois do primeiro." }
         ]
       }
     },
