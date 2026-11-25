@@ -8,7 +8,7 @@ window.MODULO = {
   cert: "SC-900",
   titulo: "Domínio 1 · Security, compliance and identity concepts",
   aprovacao: 70,
-  rodada: 10,
+  rodada: 15,
   topicos: {
     "1.1": "Conceitos de segurança e conformidade",
     "1.2": "Conceitos de identidade"
@@ -34,6 +34,31 @@ window.MODULO = {
 </ul>
 <div class="nota">Muita coisa você já viu na ISC2 CC ou faz no trabalho. A SC-900 cobra do <b>jeito da Microsoft</b>: listas com nomes e quantidades exatas (7 camadas, 3 princípios, 4 pilares). É isso que este módulo treina.</div>
 <p class="pequeno">A prova tem 45 minutos e aprovação com 700 de 1000. Existe em português, mas aqui as perguntas e alternativas (das checagens e da prova) estão em inglês, porque os nomes dos produtos são em inglês e a versão em inglês é atualizada primeiro. As explicações são em português, com o termo em inglês entre parênteses.</p>`
+    },
+
+    {
+      secao: "",
+      titulo: "Como a prova da Microsoft pergunta",
+      html: `
+<p>A prova não é só "escolha uma". Os formatos que mais aparecem nas provas Fundamentals:</p>
+<div class="degraus">
+  <div class="degrau surge d1"><b>1</b> Múltipla escolha: uma alternativa certa.</div>
+  <div class="degrau surge d2"><b>2</b> Várias certas: <i>"Choose two"</i>. Cada certa é parte da solução.</div>
+  <div class="degrau surge d3"><b>3</b> Yes / No: três afirmações, e você marca cada uma.</div>
+  <div class="degrau surge d4"><b>4</b> Associar <span class="en">(drag and drop)</span>: ligar conceito e descrição. Pode sobrar opção.</div>
+  <div class="degrau surge d5"><b>5</b> Completar a frase <span class="en">(drop-down)</span>: escolher na lista a palavra que fecha a frase.</div>
+</div>
+<p>Este curso treina os cinco. Aqui só conta como certa se você acertar <b>tudo</b> na questão. Na prova real algumas questões podem dar ponto parcial, mas treinar com mais rigor é mais seguro.</p>
+<div class="prova-dica">no Yes/No, julgue cada afirmação <b>sozinha</b>. As três podem ser Yes, as três podem ser No.</div>
+<p class="pequeno">Experimente o formato Yes/No logo abaixo, com assuntos que você já conhece.</p>`,
+      checagem: {
+        tipo: "simnao",
+        itens: [
+          { t: "Authentication happens before authorization.", ok: true, porque: "Primeiro se prova quem é (authentication), depois se decide o que pode (authorization)." },
+          { t: "Using two different passwords is multifactor authentication.", ok: false, porque: "As duas senhas são do mesmo tipo de fator (something you know). MFA exige categorias diferentes." },
+          { t: "Single sign-on lets a user sign in once to access multiple applications.", ok: true, porque: "É a definição de SSO." }
+        ]
+      }
     },
 
     // ------------------------------------------------------------------ 1.1 shared responsibility
@@ -69,6 +94,37 @@ window.MODULO = {
       }
     },
 
+    {
+      secao: "1.1",
+      titulo: "Shared responsibility em IA",
+      html: `
+<p>O Microsoft Learn ganhou uma versão da responsabilidade compartilhada para <b>IA</b> (Copilot, Azure AI Foundry). São três camadas:</p>
+<div class="tabela-rolagem"><table class="t">
+<tr><th>Camada</th><th>O que tem nela</th><th>Quem cuida</th></tr>
+<tr><td><b>AI platform</b></td><td>Infraestrutura, modelo, hospedagem, controles de segurança da plataforma</td><td>Principalmente o provedor (em SaaS e PaaS)</td></tr>
+<tr><td><b>AI application</b></td><td>Como o app é configurado: fontes de dados, conectores, plugins</td><td>Dividida; quanto mais o cliente constrói, mais é dele</td></tr>
+<tr><td><b>AI usage</b></td><td>O que as pessoas digitam, regras de uso aceitável, supervisão</td><td><b>Cliente</b></td></tr>
+</table></div>
+<p>O que fica com o cliente, mesmo num SaaS como o Microsoft 365 Copilot:</p>
+<ul>
+<li>proteger os <b>dados</b> que a IA pode ler e usar;</li>
+<li><b>identidade e acesso</b>: quem pode usar o app de IA;</li>
+<li>configuração segura: usuários, conectores, logs, retenção;</li>
+<li>riscos próprios de IA, como <span class="termo">prompt injection</span>;</li>
+<li><b>treinar os usuários</b> e definir a política de uso aceitável <span class="en">(acceptable use policy)</span>.</li>
+</ul>
+<div class="prova-dica">a regra é a mesma do modelo clássico: o provedor pode fazer o trabalho, mas os dados, as identidades e o uso continuam sendo do cliente.</div>`,
+      checagem: {
+        q: "A company deploys Microsoft 365 Copilot. Who is responsible for defining an acceptable use policy and training employees on it?",
+        opcoes: [
+          { t: "The customer", ok: true, porque: "A camada de uso (AI usage) é do cliente: regras de uso aceitável, supervisão e treinamento." },
+          { t: "Microsoft, because Copilot is a SaaS service", porque: "Em SaaS a Microsoft cuida da plataforma (AI platform), não de como seus funcionários usam a ferramenta." },
+          { t: "The AI model itself", porque: "O modelo não define nem aplica a política da empresa." },
+          { t: "Nobody: AI services don't need usage policies", porque: "Uso indevido, vazamento de dados e prompt injection são riscos reais que o cliente precisa tratar." }
+        ]
+      }
+    },
+
     // ------------------------------------------------------------------ 1.1 defense in depth
     {
       secao: "1.1",
@@ -94,6 +150,31 @@ window.MODULO = {
           { t: "Application", porque: "A camada de aplicação (application) é o código: validação de entrada, desenvolvimento seguro." },
           { t: "Perimeter", porque: "O perímetro (perimeter) é a borda: proteção contra DDoS e firewall na entrada da rede." }
         ]
+      }
+    },
+
+    {
+      secao: "1.1",
+      titulo: "CIA: o que protege cada uma",
+      html: `
+<p>As camadas da defesa em profundidade existem para proteger a tríade <b>CIA</b>. O Learn associa controles a cada uma:</p>
+<div class="tabela-rolagem"><table class="t">
+<tr><th>Objetivo</th><th>Significa</th><th>Controles típicos</th></tr>
+<tr><td><b>Confidentiality</b></td><td>Só quem tem autorização vê</td><td>Criptografia, controle de acesso, transmissão segura</td></tr>
+<tr><td><b>Integrity</b></td><td>O dado só muda por processo autorizado</td><td>Hash, assinatura digital, logs de auditoria, transações de banco</td></tr>
+<tr><td><b>Availability</b></td><td>Quem tem acesso consegue usar quando precisa</td><td>Redundância, balanceamento, failover, backup testado, proteção contra DDoS</td></tr>
+</table></div>
+<p class="surge d1">Os três podem <b>conflitar</b>. Exemplo do Learn: se você criptografa tudo (confidencialidade) e <b>perde a chave</b>, o dado fica indisponível (availability).</p>
+<div class="prova-dica">ransomware ataca principalmente a <b>availability</b> (o dado fica inacessível), mesmo que também exista vazamento.</div>`,
+      checagem: {
+        tipo: "ligar",
+        q: "Match each control to the security objective it MAINLY protects.",
+        pares: [
+          { a: "Encrypting customer records", b: "Confidentiality", porque: "Criptografia impede que quem não tem a chave leia o dado: confidencialidade (confidentiality)." },
+          { a: "Verifying a file's hash after download", b: "Integrity", porque: "O hash mostra se o arquivo foi alterado: integridade (integrity)." },
+          { a: "Keeping tested backups and a failover site", b: "Availability", porque: "Backup e failover servem para o sistema voltar a funcionar: disponibilidade (availability)." }
+        ],
+        extras: ["Non-repudiation"]
       }
     },
 
@@ -341,6 +422,63 @@ window.MODULO = {
       }
     },
 
+    {
+      secao: "1.2",
+      titulo: "Autorização: papéis, permissões e atributos",
+      html: `
+<p>Depois da autenticação, a autorização decide o que a identidade pode fazer. O Learn cita três bases para essa decisão:</p>
+<div class="tabela-rolagem"><table class="t">
+<tr><th>Base</th><th>Exemplo</th><th>Nome do modelo</th></tr>
+<tr><td><b>Roles</b> (papéis)</td><td>"Quem é do papel Auditor pode ler os relatórios"</td><td>RBAC · role-based access control</td></tr>
+<tr><td><b>Permissions</b></td><td>Ler, escrever, apagar</td><td>As ações concedidas</td></tr>
+<tr><td><b>Attributes</b> (atributos)</td><td>Departamento, local, cargo, horário</td><td>ABAC · attribute-based access control</td></tr>
+</table></div>
+<p>E sempre com <span class="termo">least privilege</span>: só o necessário para a tarefa. Para acesso privilegiado, a Microsoft acrescenta <b>JIT</b> (just-in-time: a permissão existe só quando precisa) e <b>JEA</b> (just-enough-access: só o tamanho certo).</p>
+<div class="nota">No domínio 2 você vai ver isso em produto: <b>Microsoft Entra roles e RBAC</b>, e o <b>Privileged Identity Management</b> (PIM) para o JIT.</div>
+<div class="ponte">as regras de acesso do PingAccess podem decidir por grupo (papel) ou por atributo do usuário e da requisição. É RBAC e ABAC na prática.</div>`,
+      checagem: {
+        tipo: "completar",
+        q: "Granting access to a report only to users whose department is Finance and who are in Brazil is an example of ___ access control.",
+        opcoes: [
+          { t: "attribute-based", ok: true, porque: "Departamento e país são atributos da identidade: controle baseado em atributos (ABAC)." },
+          { t: "role-based", porque: "No baseado em papéis (RBAC) o acesso vem do papel atribuído, não de atributos como país." },
+          { t: "federated", porque: "Federação (federation) é confiança entre IdPs; não decide permissões." },
+          { t: "multifactor", porque: "Multifator (MFA) é sobre autenticação, não autorização." }
+        ]
+      }
+    },
+
+    {
+      secao: "1.2",
+      titulo: "Tokens e claims",
+      html: `
+<p>No modern authentication, o IdP entrega ao app um <span class="termo">security token</span>. Dentro dele vão as <span class="termo">claims</span>: afirmações sobre a identidade.</p>
+<div class="degraus">
+  <div class="degrau surge d1"><b>·</b> identificador único do usuário</div>
+  <div class="degrau surge d2"><b>·</b> nome e e-mail</div>
+  <div class="degrau surge d3"><b>·</b> papéis ou grupos</div>
+  <div class="degrau surge d4"><b>·</b> quando foi emitido e quando expira</div>
+  <div class="degrau surge d5"><b>·</b> permissões concedidas</div>
+</div>
+<div class="tabela-rolagem"><table class="t">
+<tr><th>Token</th><th>Para quê</th><th>Protocolo</th></tr>
+<tr><td><b>ID token</b></td><td>Prova que o usuário <b>entrou</b> (autenticação)</td><td>OpenID Connect</td></tr>
+<tr><td><b>Access token</b></td><td>Dá <b>acesso</b> a um recurso, como uma API (autorização)</td><td>OAuth 2.0</td></tr>
+</table></div>
+<p>Tokens têm <b>validade curta</b> <span class="en">(time-limited)</span> e são <b>assinados</b> pelo IdP; o app confere a assinatura para confiar neles.</p>
+<div class="ponte">é o JWT que você conhece. A prova só cobra esse nível: o que é claim, ID token × access token, e que tokens expiram.</div>`,
+      checagem: {
+        tipo: "ligar",
+        q: "Match each term to its description.",
+        pares: [
+          { a: "ID token", b: "Proves that the user signed in", porque: "O ID token (OpenID Connect) é a prova da autenticação." },
+          { a: "Access token", b: "Allows an app to call a protected resource such as an API", porque: "O access token (OAuth 2.0) é a autorização para acessar o recurso." },
+          { a: "Claim", b: "A piece of information about the identity inside a token", porque: "Claims são as afirmações dentro do token: nome, papéis, validade." }
+        ],
+        extras: ["Encrypts data stored on disk"]
+      }
+    },
+
     // ------------------------------------------------------------------ 1.2 directory e AD
     {
       secao: "1.2",
@@ -402,6 +540,36 @@ window.MODULO = {
           { t: "Both organizations now share a single identity provider", porque: "Cada uma mantém o seu provedor de identidade (IdP). Só existe uma relação de confiança entre eles." }
         ]
       }
+    },
+
+    {
+      secao: "",
+      titulo: "Resumo: as listas que a prova cobra",
+      html: `
+<p>Antes da prova, confira se você lembra de cada lista sem olhar:</p>
+<div class="tabela-rolagem"><table class="t">
+<tr><th>Lista</th><th>Itens</th></tr>
+<tr><td>Sempre do cliente (shared responsibility)</td><td>Dados · contas e identidades · dispositivos · configurações</td></tr>
+<tr><td>Shared responsibility em IA (3)</td><td>AI platform · AI application · AI usage</td></tr>
+<tr><td>Defense in depth (7, de fora para dentro)</td><td>Physical · Identity and access · Perimeter · Network · Compute · Application · Data</td></tr>
+<tr><td>CIA (3)</td><td>Confidentiality · Integrity · Availability</td></tr>
+<tr><td>Zero Trust, princípios (3)</td><td>Verify explicitly · Use least privileged access · Assume breach</td></tr>
+<tr><td>Zero Trust, pilares (7)</td><td>Identities · Devices · Applications · Data · Infrastructure · Networks · Visibility, automation and orchestration</td></tr>
+<tr><td>Estados do dado (3)</td><td>At rest · In transit · In use</td></tr>
+<tr><td>Criptografia (2)</td><td>Symmetric (1 chave) · Asymmetric (par pública/privada)</td></tr>
+<tr><td>GRC (3)</td><td>Governance · Risk · Compliance</td></tr>
+<tr><td>Risco (4 passos)</td><td>Identify · Assess · Respond · Monitor</td></tr>
+<tr><td>Respostas ao risco (4)</td><td>Accept · Mitigate · Transfer · Avoid</td></tr>
+<tr><td>Dados e lei (3)</td><td>Residency (onde) · Sovereignty (qual lei) · Privacy (dado pessoal)</td></tr>
+<tr><td>Pilares da identidade (4)</td><td>Administration · Authentication · Authorization · Auditing</td></tr>
+<tr><td>Tipos de identidade</td><td>Human · Device · Workload · Agent (IA)</td></tr>
+<tr><td>Fatores de autenticação (3)</td><td>Something you know · have · are</td></tr>
+<tr><td>Protocolos</td><td>OIDC (authN, ID token) · OAuth 2.0 (authZ, access token) · SAML (corporativo, federação)</td></tr>
+<tr><td>Limitações do AD DS (4)</td><td>Sem SaaS nativo · sem não-Windows nativo · sem OAuth/OIDC · remoto precisa de VPN</td></tr>
+<tr><td>Federação, cenários (3)</td><td>B2B · identidade social · AD FS (on-premises)</td></tr>
+</table></div>
+<p>Se travou em alguma, volte à parte dela antes da prova. Depois, faça a prova até passar e use "Treinar só os erros".</p>
+<div class="nota">Para conferir de outro jeito, faça também o <b>practice assessment</b> gratuito da Microsoft: <a href="https://aka.ms/SC900-PA" target="_blank" rel="noopener">aka.ms/SC900-PA</a>. É da própria Microsoft e mostra o estilo das perguntas.</div>`
     }
   ],
 
@@ -430,6 +598,12 @@ window.MODULO = {
             { t: "With SaaS, the provider becomes accountable for all customer data", porque: "Mesmo em SaaS os dados continuam sendo responsabilidade do cliente." },
             { t: "Accountability moves to the provider once data is encrypted", porque: "Criptografar não transfere a responsabilidade pelos dados." },
             { t: "The provider is accountable for which users can access the tenant", porque: "Quem acessa o tenant é decisão do cliente." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "In SaaS, the customer is responsible for managing user accounts and identities.", ok: true, porque: "Contas e identidades (accounts and identities) são sempre do cliente." },
+            { t: "In IaaS, the cloud provider is responsible for patching the guest operating system.", ok: false, porque: "Em IaaS o sistema operacional da VM é do cliente." },
+            { t: "In every cloud model, the provider is responsible for the physical datacenter.", ok: true, porque: "A segurança física (physical security) na nuvem é sempre do provedor." }
           ] }
       ]
     },
@@ -489,7 +663,16 @@ window.MODULO = {
             { t: "Application", porque: "Application fica logo antes de data, mas não é o centro." },
             { t: "Identity and access", porque: "Identity and access é a segunda camada, de fora para dentro." },
             { t: "Physical security", porque: "Physical é a camada mais externa." }
-          ] }
+          ] },
+        { tipo: "ligar",
+          q: "Match each control to the defense-in-depth layer it belongs to.",
+          pares: [
+            { a: "DDoS protection at the network edge", b: "Perimeter", porque: "Proteção contra DDoS e firewall de borda são a camada de perímetro (perimeter)." },
+            { a: "Network security groups between subnets", b: "Network", porque: "Segmentar e filtrar tráfego entre recursos é a camada de rede (network)." },
+            { a: "Keeping VMs patched and closing unused ports", b: "Compute", porque: "A proteção da VM é a camada de processamento (compute)." },
+            { a: "Conditional Access and MFA", b: "Identity and access", porque: "MFA, RBAC e Conditional Access são identidade e acesso (identity and access)." }
+          ],
+          extras: ["Data", "Physical security"] }
       ]
     },
     {
@@ -515,6 +698,14 @@ window.MODULO = {
             { t: "Confidentiality", porque: "Confidencialidade é sigilo, protegido por criptografia e controle de acesso." },
             { t: "Integrity", porque: "Integridade é impedir alteração, com hash e assinatura." },
             { t: "Non-repudiation", porque: "Não repúdio é provar quem fez a ação." }
+          ] },
+        { tipo: "varias",
+          q: "Which TWO measures are examples of a defense-in-depth approach? (Choose two.)",
+          opcoes: [
+            { t: "Requiring MFA in addition to network segmentation", ok: true, porque: "Controles em camadas diferentes (identity and access + network)." },
+            { t: "Encrypting data and also restricting physical access to servers", ok: true, porque: "Camadas data e physical se somando." },
+            { t: "Relying on a single perimeter firewall for all protection", porque: "Uma barreira só é o oposto de defesa em profundidade." },
+            { t: "Allowing all traffic between internal servers", porque: "Rede interna sem segmentação tira uma camada." }
           ] }
       ]
     },
@@ -548,7 +739,15 @@ window.MODULO = {
             { t: "Verify explicitly", porque: "Verify explicitly trata da decisão de autenticar e autorizar." },
             { t: "Use least privileged access", porque: "Least privilege trata do tamanho das permissões." },
             { t: "Castle-and-moat", porque: "É o modelo antigo que o Zero Trust substitui." }
-          ] }
+          ] },
+        { tipo: "ligar",
+          q: "Match each practice to the Zero Trust principle it applies.",
+          pares: [
+            { a: "Evaluating user location and device health at every sign-in", b: "Verify explicitly", porque: "Usar todos os sinais para decidir é verificar explicitamente (verify explicitly)." },
+            { a: "Granting admin rights just-in-time for two hours", b: "Use least privileged access", porque: "JIT e JEA são privilégio mínimo (least privileged access)." },
+            { a: "Segmenting the network to limit the blast radius", b: "Assume breach", porque: "Limitar o estrago parte da ideia de que já houve invasão (assume breach)." }
+          ],
+          extras: ["Defense in depth"] }
       ]
     },
     {
@@ -574,6 +773,12 @@ window.MODULO = {
             { t: "Devices", porque: "Devices é um pilar." },
             { t: "Data", porque: "Data é um pilar." },
             { t: "Infrastructure", porque: "Infrastructure é um pilar." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Zero Trust is a security strategy, not a single product.", ok: true, porque: "O Learn descreve Zero Trust como estratégia (strategy), aplicada com vários produtos." },
+            { t: "In a Zero Trust model, devices inside the corporate network are trusted by default.", ok: false, porque: "Zero Trust não confia em nada só por estar 'dentro'; isso é o modelo castelo com fosso (castle-and-moat)." },
+            { t: "Visibility, automation and orchestration collects signals from the other Zero Trust pillars.", ok: true, porque: "Esse sétimo pilar junta os sinais (SIEM) e automatiza a resposta (SOAR)." }
           ] }
       ]
     },
@@ -626,6 +831,14 @@ window.MODULO = {
             { t: "Encryption in transit", porque: "In transit protege o dado na rede." },
             { t: "Single sign-on", porque: "SSO é sobre login, não sobre proteger dado guardado." },
             { t: "Federation", porque: "Federação é confiança entre IdPs." }
+          ] },
+        { tipo: "completar",
+          q: "Protecting data while it is being processed in memory, using secure enclaves, is called encryption ___.",
+          opcoes: [
+            { t: "in use", ok: true, porque: "Dado na memória durante o processamento é dado em uso (in use), protegido por confidential computing." },
+            { t: "at rest", porque: "Em repouso (at rest) é o dado guardado em disco ou banco." },
+            { t: "in transit", porque: "Em trânsito (in transit) é o dado passando pela rede." },
+            { t: "by hashing", porque: "Hash não é criptografia e não deixa o dado utilizável para processamento." }
           ] }
       ]
     },
@@ -652,6 +865,12 @@ window.MODULO = {
             { t: "Confidentiality and availability", porque: "A assinatura não esconde o conteúdo nem garante que o sistema esteja no ar." },
             { t: "Confidentiality and integrity", porque: "Assinatura não dá sigilo: a mensagem continua legível." },
             { t: "Availability and authenticity", porque: "Disponibilidade não tem relação com assinatura." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Hashing uses a secret key to produce its output.", ok: false, porque: "Hash não usa chave (key). Quem usa chave é a criptografia." },
+            { t: "A hash cannot be reversed to obtain the original data.", ok: true, porque: "Hash é só de ida (one-way)." },
+            { t: "Without a salt, the same input always produces the same hash.", ok: true, porque: "Hash é determinístico; é por isso que se usa salt nas senhas." }
           ] }
       ]
     },
@@ -711,7 +930,15 @@ window.MODULO = {
             { t: "Data residency", porque: "Residency é sobre localização." },
             { t: "Data sovereignty", porque: "Soberania é sobre jurisdição." },
             { t: "Governance", porque: "Governança é como a empresa se dirige; os direitos do titular são privacy." }
-          ] }
+          ] },
+        { tipo: "ligar",
+          q: "Match each concept to its description.",
+          pares: [
+            { a: "Data residency", b: "Where data is physically stored and how it can cross borders", porque: "Residência (residency) é sobre o lugar." },
+            { a: "Data sovereignty", b: "Data is subject to the laws of the country where it is collected or held", porque: "Soberania (sovereignty) é sobre qual lei vale." },
+            { a: "Data privacy", b: "Transparency, consent and individuals' rights over their personal data", porque: "Privacidade (privacy) é sobre o titular do dado pessoal." }
+          ],
+          extras: ["Encrypting data in transit"] }
       ]
     },
     {
@@ -763,6 +990,14 @@ window.MODULO = {
             { t: "Auditing", porque: "Auditing registra o que aconteceu." },
             { t: "Authentication", porque: "Authentication é o momento do login." },
             { t: "Authorization", porque: "Authorization são as permissões depois do login." }
+          ] },
+        { tipo: "ligar",
+          q: "Match each activity to the pillar of identity infrastructure.",
+          pares: [
+            { a: "Disabling the account of an employee who left", b: "Administration", porque: "Ciclo de vida da conta é administração (administration)." },
+            { a: "Verifying a user's password and MFA code", b: "Authentication", porque: "Provar a identidade é autenticação (authentication)." },
+            { a: "Deciding the user can read but not delete a file", b: "Authorization", porque: "Decidir permissões é autorização (authorization)." },
+            { a: "Reviewing sign-in logs after a suspicious event", b: "Auditing", porque: "Logs e investigação são auditoria (auditing)." }
           ] }
       ]
     },
@@ -789,6 +1024,14 @@ window.MODULO = {
             { t: "A password and a security question", porque: "Os dois são algo que você sabe." },
             { t: "A username and a password", porque: "Usuário é identificação; só a senha autentica." },
             { t: "Two different passwords", porque: "Dois fatores da mesma categoria." }
+          ] },
+        { tipo: "completar",
+          q: "The process of proving that a person or service is who it claims to be is called ___.",
+          opcoes: [
+            { t: "authentication", ok: true, porque: "Provar a identidade é autenticação (authentication)." },
+            { t: "authorization", porque: "Autorização (authorization) decide o que a identidade pode fazer." },
+            { t: "federation", porque: "Federação (federation) é confiança entre IdPs." },
+            { t: "auditing", porque: "Auditoria (auditing) registra o que aconteceu." }
           ] }
       ]
     },
@@ -822,6 +1065,14 @@ window.MODULO = {
             { t: "Each application must be updated separately to block the user", porque: "Com SSO, desativar no IdP já corta o acesso." },
             { t: "Nothing changes until their password expires", porque: "A conta desativada não consegue mais entrar." },
             { t: "Only applications using SAML are affected", porque: "Todos os apps que confiam no IdP são afetados." }
+          ] },
+        { tipo: "varias",
+          q: "Which TWO are benefits of single sign-on (SSO)? Each correct answer presents a complete solution. (Choose two.)",
+          opcoes: [
+            { t: "Users have fewer credentials to remember and fewer sign-in prompts", ok: true, porque: "Uma credencial e um login para vários apps." },
+            { t: "Disabling an account in the identity provider removes access to all connected apps", ok: true, porque: "Controle central é um dos benefícios do SSO." },
+            { t: "Applications no longer need to authorize users", porque: "Cada app continua fazendo a autorização (authorization)." },
+            { t: "Multifactor authentication is no longer needed", porque: "SSO e MFA se combinam; um não substitui o outro." }
           ] }
       ]
     },
@@ -874,6 +1125,12 @@ window.MODULO = {
             { t: "Using two passwords for each user", porque: "O objetivo é o contrário: uma credencial só." },
             { t: "Combining MFA and SSO", porque: "Isso não é identidade híbrida." },
             { t: "Federating with social identity providers", porque: "Isso é federação com identidade social." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Microsoft Entra ID is a cloud-based identity and access management service.", ok: true, porque: "O Entra ID é o serviço de identidade em nuvem, no modelo IDaaS." },
+            { t: "Active Directory Domain Services natively supports OpenID Connect and OAuth 2.0.", ok: false, porque: "O AD DS usa Kerberos e NTLM; não suporta OAuth/OIDC nativamente." },
+            { t: "Remote users usually need a VPN to authenticate against on-premises AD DS.", ok: true, porque: "É uma das limitações do AD DS que o Learn lista." }
           ] }
       ]
     },
@@ -900,6 +1157,247 @@ window.MODULO = {
             { t: "Domain controller", porque: "O DC autentica na rede local com Kerberos/NTLM." },
             { t: "Azure Key Vault", porque: "Key Vault guarda chaves e segredos." },
             { t: "Group Policy", porque: "Group Policy configura máquinas Windows." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Federation requires users to create a new account in each partner organization.", ok: false, porque: "Federação existe para dispensar contas novas: o parceiro aceita a autenticação feita na origem." },
+            { t: "A federation trust is automatically two-way.", ok: false, porque: "A confiança (trust) não é automaticamente nos dois sentidos; a volta precisa ser configurada." },
+            { t: "Signing in to a website with a Google or GitHub account is an example of federation.", ok: true, porque: "Login com identidade social (social identity provider) é um dos cenários de federação do Learn." }
+          ] }
+      ]
+    },
+    {
+      id: "sr-ia", topico: "1.1", resumo: "Responsabilidade compartilhada em IA",
+      variantes: [
+        { q: "In the AI shared responsibility model, which layer includes the inputs users type and the organization's acceptable use policies?",
+          opcoes: [
+            { t: "AI usage", ok: true, porque: "A camada de uso (AI usage) trata do que as pessoas fazem com a IA; é do cliente." },
+            { t: "AI platform", porque: "A plataforma (AI platform) é a infraestrutura e o modelo." },
+            { t: "AI application", porque: "A aplicação (AI application) é a configuração: fontes de dados, conectores, plugins." },
+            { t: "AI perimeter", porque: "Não existe essa camada no modelo." }
+          ] },
+        { q: "An organization uses Microsoft 365 Copilot. Which responsibility remains with the organization?",
+          opcoes: [
+            { t: "Controlling which users can access Copilot and what data it can reach", ok: true, porque: "Identidade, acesso e dados continuam sendo do cliente, mesmo em IA como SaaS." },
+            { t: "Hosting and patching the underlying AI model", porque: "Hospedar e manter o modelo é da plataforma (AI platform), do provedor." },
+            { t: "Securing the physical datacenter", porque: "Segurança física é sempre do provedor na nuvem." },
+            { t: "Building the platform safety controls of the model", porque: "Os controles da plataforma são do provedor." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Protecting against prompt injection is something the customer must consider when using AI apps.", ok: true, porque: "O Learn cita riscos próprios de IA, como prompt injection, entre as responsabilidades do cliente." },
+            { t: "When using an AI SaaS product, the provider becomes responsible for the data users share with it.", ok: false, porque: "A responsabilidade pelos dados (data) nunca passa para o provedor." },
+            { t: "The AI shared responsibility model has three layers: platform, application and usage.", ok: true, porque: "São as três camadas: AI platform, AI application, AI usage." }
+          ] }
+      ]
+    },
+    {
+      id: "cia", topico: "1.1", resumo: "CIA e os controles de cada uma",
+      variantes: [
+        { q: "A ransomware attack encrypts a company's file servers so employees can't open their files. Which objective is MOST directly affected?",
+          opcoes: [
+            { t: "Availability", ok: true, porque: "Os arquivos ficaram inacessíveis para quem tem direito: disponibilidade (availability)." },
+            { t: "Confidentiality", porque: "O efeito direto é não conseguir usar os arquivos, não alguém lê-los." },
+            { t: "Integrity", porque: "O ransomware altera os arquivos, mas o efeito principal é eles ficarem inacessíveis (availability)." },
+            { t: "Authentication", porque: "Autenticação não é um dos objetivos da CIA." }
+          ] },
+        { q: "Digital signatures and audit logs are controls that mainly support which objective?",
+          opcoes: [
+            { t: "Integrity", ok: true, porque: "Os dois servem para garantir e provar que o dado não foi alterado indevidamente (integrity)." },
+            { t: "Availability", porque: "Disponibilidade é protegida por redundância e backup." },
+            { t: "Confidentiality", porque: "Assinatura não esconde o conteúdo." },
+            { t: "Data residency", porque: "Residência é sobre onde o dado fica." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Losing an encryption key can make data unavailable.", ok: true, porque: "O Learn usa esse exemplo: confidencialidade e disponibilidade podem conflitar." },
+            { t: "Load balancing and failover mainly protect confidentiality.", ok: false, porque: "Eles mantêm o serviço funcionando: disponibilidade (availability)." },
+            { t: "Encryption is the main control for confidentiality.", ok: true, porque: "Criptografia é o controle central da confidencialidade (confidentiality), junto com controle de acesso." }
+          ] }
+      ]
+    },
+    {
+      id: "chaves", topico: "1.1", resumo: "Gestão de chaves (HSM, rotação, Key Vault)",
+      variantes: [
+        { q: "Which practice is recommended for managing encryption keys?",
+          opcoes: [
+            { t: "Store keys separately from the data they protect", ok: true, porque: "Se a chave fica junto do dado, quem rouba um leva o outro." },
+            { t: "Store keys in the same database as the encrypted data for convenience", porque: "É exatamente o que não se deve fazer." },
+            { t: "Never rotate keys so applications don't break", porque: "A recomendação é rotacionar as chaves (key rotation) regularmente." },
+            { t: "Share keys with all administrators by email", porque: "O acesso às chaves deve ser restrito e controlado." }
+          ] },
+        { q: "What is a hardware security module (HSM)?",
+          opcoes: [
+            { t: "Tamper-resistant hardware designed to protect cryptographic keys", ok: true, porque: "HSM é hardware resistente a violação (tamper-resistant) para guardar e usar chaves." },
+            { t: "A firewall that inspects encrypted traffic", porque: "Firewall filtra tráfego; não é cofre de chaves." },
+            { t: "A tool that hashes passwords", porque: "Hash não depende de HSM." },
+            { t: "A backup appliance for databases", porque: "Backup não tem relação com proteger chaves." }
+          ] },
+        { tipo: "varias",
+          q: "Which TWO are good key management practices? (Choose two.)",
+          opcoes: [
+            { t: "Rotate keys regularly", ok: true, porque: "A rotação (rotation) limita o estrago se uma chave vazar." },
+            { t: "Tightly control who can access the keys", ok: true, porque: "O acesso às chaves deve ser mínimo e auditado." },
+            { t: "Hard-code keys in application source code", porque: "Chave no código vaza junto com o código." },
+            { t: "Use the same key for every system", porque: "Uma chave para tudo aumenta o estrago de um vazamento." }
+          ] }
+      ]
+    },
+    {
+      id: "risco", topico: "1.1", resumo: "Gestão de risco: passos e avaliação",
+      variantes: [
+        { q: "In risk management, how is a risk typically scored during assessment?",
+          opcoes: [
+            { t: "By combining its impact and its likelihood", ok: true, porque: "Impacto × probabilidade (impact × likelihood) dá a nota do risco." },
+            { t: "By counting the number of controls in place", porque: "Quantidade de controles não mede o risco." },
+            { t: "By the cost of the affected asset only", porque: "Valor do ativo é parte do impacto, mas falta a probabilidade." },
+            { t: "By how many users report it", porque: "Não é assim que se avalia risco." }
+          ] },
+        { tipo: "completar",
+          q: "After identifying, assessing and responding to risks, an organization must ___ them because risks change over time.",
+          opcoes: [
+            { t: "monitor", ok: true, porque: "O quarto passo é monitorar (monitor)." },
+            { t: "ignore", porque: "Risco muda; ignorar não faz parte do ciclo." },
+            { t: "encrypt", porque: "Criptografar é um controle, não um passo da gestão de risco." },
+            { t: "federate", porque: "Federação é sobre identidade." }
+          ] },
+        { tipo: "ligar",
+          q: "Match each action to the risk response.",
+          pares: [
+            { a: "Buying cyber insurance", b: "Transfer", porque: "Passar o impacto financeiro para a seguradora é transferir (transfer)." },
+            { a: "Deploying MFA to reduce account takeover", b: "Mitigate", porque: "Reduzir a chance com um controle é mitigar (mitigate)." },
+            { a: "Shutting down a risky legacy service", b: "Avoid", porque: "Deixar de fazer a atividade é evitar (avoid)." },
+            { a: "Documenting a low risk and taking no action", b: "Accept", porque: "Decidir conscientemente conviver com o risco é aceitar (accept)." }
+          ] }
+      ]
+    },
+    {
+      id: "authz-modelos", topico: "1.2", resumo: "Autorização: RBAC, ABAC, least privilege",
+      variantes: [
+        { q: "A company grants permissions to users by assigning them to job functions such as 'Helpdesk' or 'Auditor'. Which model is this?",
+          opcoes: [
+            { t: "Role-based access control (RBAC)", ok: true, porque: "Permissões vindas de um papel (role) são RBAC." },
+            { t: "Attribute-based access control (ABAC)", porque: "ABAC decide por atributos como departamento ou local." },
+            { t: "Federation", porque: "Federação é confiança entre IdPs." },
+            { t: "Single sign-on", porque: "SSO é sobre login, não sobre permissões." }
+          ] },
+        { q: "Which principle states that users should receive only the permissions needed to perform their tasks?",
+          opcoes: [
+            { t: "Least privilege", ok: true, porque: "É a definição de privilégio mínimo (least privilege)." },
+            { t: "Defense in depth", porque: "Defesa em profundidade é sobre camadas." },
+            { t: "Assume breach", porque: "Assume breach é segmentar e monitorar como se já houvesse invasão." },
+            { t: "Separation of duties", porque: "Separação de funções divide uma tarefa entre pessoas; não é a definição pedida." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Authorization can be based on attributes such as department and location.", ok: true, porque: "O Learn cita papéis, permissões e atributos (attributes)." },
+            { t: "Just-in-time access means privileged permissions are available permanently.", ok: false, porque: "JIT é o contrário: a permissão existe só quando precisa." },
+            { t: "Authorization happens only after successful authentication.", ok: true, porque: "Primeiro authentication, depois authorization." }
+          ] }
+      ]
+    },
+    {
+      id: "tokens", topico: "1.2", resumo: "Tokens e claims (ID token, access token)",
+      variantes: [
+        { q: "What is a claim in a security token?",
+          opcoes: [
+            { t: "A piece of information about the identity, such as name, role or expiration", ok: true, porque: "Claims são as afirmações dentro do token." },
+            { t: "The password of the user", porque: "Senha nunca vai no token." },
+            { t: "A trust relationship between two organizations", porque: "Isso é federação (trust)." },
+            { t: "The encryption key used for data at rest", porque: "Não tem relação com tokens." }
+          ] },
+        { q: "Which token is used by an application to call a protected API on behalf of the user?",
+          opcoes: [
+            { t: "Access token", ok: true, porque: "O access token (OAuth 2.0) dá acesso ao recurso." },
+            { t: "ID token", porque: "O ID token prova o login; não é para chamar APIs." },
+            { t: "Refresh token", porque: "O refresh token serve para obter novos access tokens; não é ele que chama a API." },
+            { t: "SAML metadata", porque: "Metadata descreve a configuração da federação; não autoriza chamadas." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Security tokens issued by an identity provider are time-limited.", ok: true, porque: "Tokens têm validade (expiration) e precisam ser renovados." },
+            { t: "An ID token is used to prove that a user signed in.", ok: true, porque: "O ID token (OpenID Connect) é a prova de autenticação." },
+            { t: "Applications must store the user's password to validate a token.", ok: false, porque: "O app confere a assinatura do IdP; nunca precisa da senha." }
+          ] }
+      ]
+    },
+    {
+      id: "protocolos", topico: "1.2", resumo: "Protocolos: OIDC, OAuth 2.0, SAML",
+      variantes: [
+        { tipo: "ligar",
+          q: "Match each protocol to how Microsoft Learn describes it.",
+          pares: [
+            { a: "OpenID Connect", b: "Authentication layer built on OAuth 2.0", porque: "OIDC faz a autenticação e emite o ID token." },
+            { a: "OAuth 2.0", b: "Authorization framework that issues access tokens", porque: "OAuth 2.0 é de autorização." },
+            { a: "SAML", b: "Used by many enterprise and older apps and for federation", porque: "SAML é o protocolo clássico de federação corporativa." }
+          ],
+          extras: ["Network-level encryption between datacenters"] },
+        { q: "Which protocol does Microsoft Learn describe as an authentication layer built on top of OAuth 2.0?",
+          opcoes: [
+            { t: "OpenID Connect", ok: true, porque: "OIDC adiciona a autenticação sobre o OAuth 2.0." },
+            { t: "SAML", porque: "SAML é independente do OAuth." },
+            { t: "Kerberos", porque: "Kerberos é o protocolo do AD DS." },
+            { t: "NTLM", porque: "NTLM é um protocolo antigo do Windows." }
+          ] },
+        { tipo: "completar",
+          q: "A company's older enterprise web apps rely on XML-based assertions for federation. These apps most likely use ___.",
+          opcoes: [
+            { t: "SAML", ok: true, porque: "SAML usa asserções em XML e é comum em apps corporativos e federação." },
+            { t: "OpenID Connect", porque: "OIDC usa tokens JSON (JWT), não asserções XML." },
+            { t: "OAuth 2.0", porque: "OAuth 2.0 é de autorização e usa access tokens." },
+            { t: "Kerberos", porque: "Kerberos é para a rede interna do AD DS." }
+          ] }
+      ]
+    },
+    {
+      id: "tipos-identidade", topico: "1.2", resumo: "Tipos de identidade (humana, dispositivo, workload, agente)",
+      variantes: [
+        { tipo: "ligar",
+          q: "Match each example to the type of identity.",
+          pares: [
+            { a: "An employee signing in to email", b: "Human", porque: "Uma pessoa é identidade humana (human)." },
+            { a: "A laptop registered in the directory", b: "Device", porque: "Dispositivo (device) também tem identidade." },
+            { a: "A backend service calling an API", b: "Workload", porque: "Software e serviços usam identidade de workload (workload identity)." },
+            { a: "An AI agent acting on tasks for users", b: "Agent", porque: "O Learn agora cita identidades de agentes de IA (agent)." }
+          ] },
+        { q: "A script running in Azure needs to authenticate to read a storage account. What type of identity should it use?",
+          opcoes: [
+            { t: "A workload identity", ok: true, porque: "Apps, serviços e scripts usam identidade de workload." },
+            { t: "A shared human user account", porque: "Conta humana compartilhada para script é má prática e quebra a rastreabilidade." },
+            { t: "A guest identity", porque: "Guest é uma pessoa de fora da organização." },
+            { t: "A device identity", porque: "Device identity é do dispositivo, não do software." }
+          ] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Devices can have identities in a directory.", ok: true, porque: "Identidade de dispositivo (device identity) é um dos tipos." },
+            { t: "Only humans can have identities.", ok: false, porque: "Dispositivos, workloads e agentes também têm." },
+            { t: "AI agents may need their own identities to access resources.", ok: true, porque: "O Learn cita identidades de agente (agent identities)." }
+          ] }
+      ]
+    },
+    {
+      id: "adds-recursos", topico: "1.2", resumo: "AD DS: Kerberos/NTLM, OUs, Group Policy",
+      variantes: [
+        { q: "Which authentication protocols does on-premises AD DS use?",
+          opcoes: [
+            { t: "Kerberos and NTLM", ok: true, porque: "São os protocolos do AD DS na rede interna." },
+            { t: "OAuth 2.0 and OpenID Connect", porque: "Esses são os protocolos modernos que o AD DS não suporta nativamente." },
+            { t: "SAML only", porque: "SAML é de federação, com AD FS por exemplo, não do AD DS em si." },
+            { t: "SMTP and IMAP", porque: "São protocolos de e-mail." }
+          ] },
+        { tipo: "ligar",
+          q: "Match each AD DS feature to its description.",
+          pares: [
+            { a: "Domain controller", b: "Server that runs AD DS and verifies sign-ins", porque: "O servidor com AD DS é o controlador de domínio (domain controller)." },
+            { a: "Organizational unit (OU)", b: "Container used to organize directory objects", porque: "OUs organizam usuários, grupos e computadores." },
+            { a: "Group Policy", b: "Applies configuration settings to Windows computers and users", porque: "Group Policy aplica configurações às máquinas do domínio." }
+          ],
+          extras: ["Issues access tokens for cloud APIs"] },
+        { tipo: "simnao",
+          itens: [
+            { t: "Active Directory was first released with Windows 2000 Server.", ok: true, porque: "É o histórico que o Learn cita." },
+            { t: "AD DS natively manages iOS and Android devices.", ok: false, porque: "Não suportar dispositivos não-Windows nativamente é uma das limitações do AD DS." },
+            { t: "AD DS can be synchronized with Microsoft Entra ID to create a hybrid identity.", ok: true, porque: "É a identidade híbrida (hybrid identity)." }
           ] }
       ]
     }

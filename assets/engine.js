@@ -131,8 +131,160 @@
   }
 
   // Renderiza uma pergunta (checagem da lição ou questão da prova).
-  // Ao responder, mostra o porquê de TODAS as alternativas.
+  // Tipos: múltipla escolha (padrão), "simnao" (Yes/No por afirmação), "ligar" (associar colunas),
+  // "completar" (escolher a palavra que completa a frase). Nos três últimos, só conta como certa se tudo estiver certo.
   function renderPergunta(caixa, variante, aoResponder) {
+    if (variante.tipo === "simnao") return renderSimNao(caixa, variante, aoResponder);
+    if (variante.tipo === "ligar") return renderLigar(caixa, variante, aoResponder);
+    if (variante.tipo === "completar") return renderCompletar(caixa, variante, aoResponder);
+    if (variante.tipo === "varias") return renderVarias(caixa, variante, aoResponder);
+    return renderMultipla(caixa, variante, aoResponder);
+  }
+
+  // "Choose two/three": marcar exatamente tantas quantas forem as certas.
+  function renderVarias(caixa, v, aoResponder) {
+    const opcoes = embaralhar(v.opcoes);
+    const n = opcoes.filter((o) => o.ok).length;
+    caixa.innerHTML = `<p class="pergunta">${v.q}</p><p class="pequeno">Marque ${n} alternativas.</p><div class="opcoes"></div>`;
+    const lista = $(".opcoes", caixa);
+    const marcado = opcoes.map(() => false);
+    const botoes = opcoes.map((op, i) => {
+      const b = document.createElement("button");
+      b.className = "opcao varias";
+      b.innerHTML = `<span class="letra">${LETRAS[i]}</span><span class="corpo-op"><span>${op.t}</span><span class="porque oculto"></span></span>`;
+      b.addEventListener("click", () => alternar(i));
+      lista.appendChild(b);
+      return b;
+    });
+    function alternar(i) {
+      if (conf.respondida) return;
+      if (!marcado[i] && marcado.filter(Boolean).length >= n) return;
+      marcado[i] = !marcado[i];
+      botoes[i].classList.toggle("marcada", marcado[i]);
+      conf.disabled = marcado.filter(Boolean).length !== n;
+    }
+    const conf = montarConfirmar(caixa, () => {
+      conf.respondida = true;
+      const acertou = opcoes.every((o, k) => !!o.ok === marcado[k]);
+      botoes.forEach((b, k) => {
+        b.disabled = true;
+        if (opcoes[k].ok) b.classList.add("certa");
+        else if (marcado[k]) b.classList.add("errada");
+        const pq = $(".porque", b);
+        if (opcoes[k].porque) { pq.innerHTML = opcoes[k].porque; pq.classList.remove("oculto"); }
+      });
+      mostrarFeedback(caixa, acertou, `Só vale se marcar as ${n} certas. Leia o porquê de cada alternativa.`);
+      if (aoResponder) aoResponder(acertou);
+    });
+    caixa._responderPorTecla = (i) => { if (i < botoes.length) alternar(i); };
+    return caixa;
+  }
+
+  const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
+  // Parte comum dos tipos com botão Confirmar.
+  function montarConfirmar(caixa, aoConfirmar) {
+    const rodape = document.createElement("div");
+    rodape.className = "confirmar";
+    rodape.innerHTML = `<button class="btn primario" disabled>Confirm</button>`;
+    caixa.appendChild(rodape);
+    const b = $("button", rodape);
+    b.addEventListener("click", () => { b.disabled = true; rodape.classList.add("oculto"); aoConfirmar(); });
+    return b;
+  }
+  function mostrarFeedback(caixa, acertou, msgErro) {
+    const fb = document.createElement("div");
+    fb.className = "feedback " + (acertou ? "ok" : "nok");
+    fb.textContent = acertou ? "Certo!" : msgErro;
+    caixa.appendChild(fb);
+  }
+
+  function renderSimNao(caixa, v, aoResponder) {
+    const itens = embaralhar(v.itens);
+    caixa.innerHTML = `<p class="pergunta">${v.q || "For each of the following statements, select Yes if the statement is true. Otherwise, select No."}</p><div class="sn-lista"></div>`;
+    const lista = $(".sn-lista", caixa);
+    const escolha = itens.map(() => null);
+    const linhas = itens.map((it, i) => {
+      const d = document.createElement("div");
+      d.className = "sn-item";
+      d.innerHTML = `<div class="sn-texto">${it.t}</div><div class="sn-botoes"><button class="sn-b" data-v="1">Yes</button><button class="sn-b" data-v="0">No</button></div><span class="porque oculto"></span>`;
+      d.querySelectorAll(".sn-b").forEach((b) => b.addEventListener("click", () => {
+        escolha[i] = b.dataset.v === "1";
+        d.querySelectorAll(".sn-b").forEach((x) => x.classList.toggle("marcado", x === b));
+        conf.disabled = escolha.some((e) => e === null);
+      }));
+      lista.appendChild(d);
+      return d;
+    });
+    const conf = montarConfirmar(caixa, () => {
+      let tudo = true;
+      linhas.forEach((d, i) => {
+        const certo = escolha[i] === !!itens[i].ok;
+        if (!certo) tudo = false;
+        d.classList.add(certo ? "certa" : "errada");
+        d.querySelectorAll(".sn-b").forEach((x) => { x.disabled = true; if ((x.dataset.v === "1") === !!itens[i].ok) x.classList.add("gabarito"); });
+        const pq = $(".porque", d);
+        pq.innerHTML = `<b>${itens[i].ok ? "Yes" : "No"}.</b> ${itens[i].porque || ""}`;
+        pq.classList.remove("oculto");
+      });
+      mostrarFeedback(caixa, tudo, "Alguma afirmação ficou errada. Só vale se acertar todas. Veja o porquê de cada uma.");
+      if (aoResponder) aoResponder(tudo);
+    });
+    return caixa;
+  }
+
+  function renderLigar(caixa, v, aoResponder) {
+    const pares = embaralhar(v.pares);
+    const alvos = embaralhar(Array.from(new Set(v.pares.map((p) => p.b).concat(v.extras || []))));
+    caixa.innerHTML = `<p class="pergunta">${v.q}</p><div class="lg-lista"></div>`;
+    const lista = $(".lg-lista", caixa);
+    const linhas = pares.map((p) => {
+      const d = document.createElement("div");
+      d.className = "lg-item";
+      d.innerHTML = `<div class="lg-a">${p.a}</div><select class="lg-sel"><option value="">Select…</option>${alvos.map((b) => `<option value="${esc(b)}">${b}</option>`).join("")}</select><span class="porque oculto"></span>`;
+      $("select", d).addEventListener("change", () => { conf.disabled = linhas.some((x) => !$("select", x).value); });
+      lista.appendChild(d);
+      return d;
+    });
+    const conf = montarConfirmar(caixa, () => {
+      let tudo = true;
+      linhas.forEach((d, i) => {
+        const sel = $("select", d);
+        const certo = sel.value === pares[i].b;
+        if (!certo) tudo = false;
+        sel.disabled = true;
+        d.classList.add(certo ? "certa" : "errada");
+        const pq = $(".porque", d);
+        pq.innerHTML = (certo ? "" : `Certo: <b>${pares[i].b}</b>. `) + (pares[i].porque || "");
+        pq.classList.remove("oculto");
+      });
+      mostrarFeedback(caixa, tudo, "Alguma associação ficou errada. Só vale se acertar todas.");
+      if (aoResponder) aoResponder(tudo);
+    });
+    return caixa;
+  }
+
+  function renderCompletar(caixa, v, aoResponder) {
+    const opcoes = embaralhar(v.opcoes);
+    const sel = `<select class="cp-sel"><option value="">Select…</option>${opcoes.map((o, i) => `<option value="${i}">${o.t}</option>`).join("")}</select>`;
+    caixa.innerHTML = `<p class="pequeno">Complete the sentence.</p><p class="pergunta cp-frase">${v.q.replace("___", sel)}</p><div class="cp-porques oculto"></div>`;
+    const s = $("select", caixa);
+    s.addEventListener("change", () => { conf.disabled = !s.value; });
+    const conf = montarConfirmar(caixa, () => {
+      const i = Number(s.value);
+      const acertou = !!opcoes[i].ok;
+      s.disabled = true;
+      s.classList.add(acertou ? "certa" : "errada");
+      const box = $(".cp-porques", caixa);
+      box.innerHTML = opcoes.map((o, k) => `<div class="cp-op ${o.ok ? "certa" : (k === i ? "errada" : "")}"><b>${o.t}</b><span class="porque">${o.porque || ""}</span></div>`).join("");
+      box.classList.remove("oculto");
+      mostrarFeedback(caixa, acertou, "Não foi dessa vez. Leia o porquê de cada opção.");
+      if (aoResponder) aoResponder(acertou);
+    });
+    return caixa;
+  }
+
+  function renderMultipla(caixa, variante, aoResponder) {
     const opcoes = embaralhar(variante.opcoes);
     caixa.innerHTML = `<p class="pergunta">${variante.q}</p><div class="opcoes"></div><div class="feedback oculto"></div>`;
     const lista = $(".opcoes", caixa);
@@ -266,7 +418,7 @@
       configurarNav({
         semAnt: true,
         prox: respondeu ? (ultimo ? mostrarResultado : () => { estado.atual++; mostrarQuestao(); }) : null,
-        proxTexto: respondeu ? (ultimo ? "Ver resultado" : "Próxima") : "Escolha uma alternativa",
+        proxTexto: respondeu ? (ultimo ? "Ver resultado" : "Próxima") : "Responda para seguir",
         contador: `${estado.atual + 1}/${total}`
       });
     }

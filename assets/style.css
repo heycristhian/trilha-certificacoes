@@ -203,3 +203,28 @@ table.t th { font-weight: 600; color: var(--texto-2); font-size: .8rem; text-tra
 .centro { text-align: center; }
 .pequeno { font-size: .85rem; color: var(--texto-2); }
 @media (max-width: 520px) { table.t { font-size: .84rem; } table.t th, table.t td { padding: 6px 4px; } }
+
+/* Outros formatos de pergunta: Yes/No, associar colunas, completar a frase */
+.confirmar { margin-top: 14px; }
+.sn-lista, .lg-lista { display: grid; gap: 10px; }
+.sn-item, .lg-item, .cp-op { border: 1.5px solid var(--linha); border-radius: 10px; padding: 10px 14px; background: var(--card); }
+.sn-item { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; }
+.sn-item .porque { grid-column: 1 / -1; margin-top: 0; }
+.sn-botoes { display: flex; gap: 6px; }
+.sn-b { font: inherit; font-weight: 600; min-width: 56px; padding: 6px 10px; border-radius: 8px; border: 1.5px solid var(--linha); background: var(--card); color: var(--texto); cursor: pointer; }
+.sn-b.marcado { background: var(--destaque); border-color: var(--destaque); color: #fff; }
+.sn-b:disabled { cursor: default; }
+.sn-b.gabarito { outline: 2px solid var(--certo); outline-offset: 1px; }
+.lg-item { display: grid; gap: 6px; }
+.lg-a { font-weight: 600; }
+select.lg-sel, select.cp-sel { font: inherit; font-size: .95rem; max-width: 100%; padding: 6px 8px; border-radius: 8px; border: 1.5px solid var(--destaque); background: var(--card); color: var(--texto); }
+.cp-frase { line-height: 2.1; }
+.cp-porques { display: grid; gap: 8px; margin-top: 12px; }
+.sn-item.certa, .lg-item.certa, .cp-op.certa, select.certa { border-color: var(--certo); background: var(--certo-suave); }
+.sn-item.errada, .lg-item.errada, .cp-op.errada, select.errada { border-color: var(--errado); background: var(--errado-suave); }
+@media (max-width: 520px) { .sn-item { grid-template-columns: 1fr; } }
+.opcao.marcada { border-color: var(--destaque); background: var(--destaque-suave); }
+.opcao.varias .letra { border: 1.5px solid var(--linha); border-radius: 4px; text-align: center; }
+.lg-lista, .sn-lista, .lg-item, .sn-item { min-width: 0; }
+select.lg-sel { width: 100%; min-width: 0; text-overflow: ellipsis; }
+select.cp-sel { width: auto; max-width: 100%; }
