@@ -33,7 +33,7 @@ window.MODULO = {
 <li><b>1.2</b> Identidade: identidade como perímetro, autenticação e autorização, IdP, diretório e Active Directory, federação.</li>
 </ul>
 <div class="nota">Muita coisa você já viu na ISC2 CC ou faz no trabalho. A SC-900 cobra do <b>jeito da Microsoft</b>: listas com nomes e quantidades exatas (7 camadas, 3 princípios, 4 pilares). É isso que este módulo treina.</div>
-<p class="pequeno">A prova tem 45 minutos e aprovação com 700 de 1000. Existe em português, mas as perguntas aqui estão em inglês, porque os nomes dos produtos são em inglês e a versão em inglês é atualizada primeiro.</p>`
+<p class="pequeno">A prova tem 45 minutos e aprovação com 700 de 1000. Existe em português, mas aqui as perguntas e alternativas (das checagens e da prova) estão em inglês, porque os nomes dos produtos são em inglês e a versão em inglês é atualizada primeiro. As explicações são em português, com o termo em inglês entre parênteses.</p>`
     },
 
     // ------------------------------------------------------------------ 1.1 shared responsibility
@@ -59,12 +59,12 @@ window.MODULO = {
 <div class="prova-dica">o provedor pode fazer o trabalho, mas a <b>responsabilidade</b> (accountability) pelos dados e identidades nunca é transferida.</div>
 <p class="pequeno">O Learn agora também fala de responsabilidade compartilhada em IA, com três camadas: plataforma, aplicação e uso. Proteger os dados que vão para o modelo, quem acessa o app e o treinamento dos usuários continua com o cliente.</p>`,
       checagem: {
-        q: "Uma empresa usa o Microsoft 365 (SaaS). Quem é responsável por definir quem tem conta e com quais permissões?",
+        q: "A company uses Microsoft 365 (SaaS). Who is responsible for deciding which users have accounts and what permissions they get?",
         opcoes: [
-          { t: "O cliente", ok: true, porque: "Contas e identidades ficam sempre com o cliente, inclusive em SaaS." },
-          { t: "A Microsoft, porque o serviço é SaaS", porque: "Em SaaS a Microsoft cuida da aplicação e da infraestrutura, mas não decide quem usa o serviço." },
-          { t: "Os dois, em partes iguais", porque: "A plataforma de identidade é da Microsoft, mas a decisão sobre contas e permissões é só do cliente." },
-          { t: "Ninguém: o SaaS já vem com as permissões certas", porque: "Nenhum provedor sabe quem na sua empresa deve acessar o quê." }
+          { t: "The customer", ok: true, porque: "Contas e identidades (accounts and identities) ficam sempre com o cliente (customer), inclusive em SaaS." },
+          { t: "Microsoft, because the service is SaaS", porque: "Em SaaS a Microsoft cuida da aplicação e da infraestrutura, mas não decide quem usa o serviço." },
+          { t: "Both, in equal parts", porque: "A plataforma de identidade é da Microsoft, mas a decisão sobre contas e permissões é só do cliente." },
+          { t: "No one: SaaS comes with the right permissions preconfigured", porque: "Nenhum provedor sabe quem na sua empresa deve acessar o quê." }
         ]
       }
     },
@@ -87,12 +87,12 @@ window.MODULO = {
 <p>As camadas servem para proteger a <b>CIA</b> que você já conhece da ISC2: <b>Confidentiality</b>, <b>Integrity</b> e <b>Availability</b>.</p>
 <div class="prova-dica">se a pergunta descreve uma proteção e pede a camada, pense no que ela protege. DDoS é <b>perimeter</b>; segmentar sub-redes é <b>network</b>; patch na VM é <b>compute</b>; MFA é <b>identity and access</b>.</div>`,
       checagem: {
-        q: "Uma empresa aplica os patches mais recentes do sistema operacional em todas as máquinas virtuais. Em qual camada da defesa em profundidade isso se encaixa?",
+        q: "A company applies the latest operating system patches to all its virtual machines. Which defense-in-depth layer does this belong to?",
         opcoes: [
-          { t: "Compute", ok: true, porque: "Manter a VM atualizada e com o mínimo de portas abertas é a camada de compute." },
-          { t: "Network", porque: "Network trata de segmentação e do tráfego entre recursos, não do sistema operacional." },
-          { t: "Application", porque: "Application é o código da aplicação (validação de entrada, desenvolvimento seguro)." },
-          { t: "Perimeter", porque: "Perimeter é a borda: DDoS e firewall na entrada da rede." }
+          { t: "Compute", ok: true, porque: "Manter a VM atualizada e com o mínimo de portas abertas é a camada de processamento (compute)." },
+          { t: "Network", porque: "A camada de rede (network) trata de segmentação e do tráfego entre recursos, não do sistema operacional." },
+          { t: "Application", porque: "A camada de aplicação (application) é o código: validação de entrada, desenvolvimento seguro." },
+          { t: "Perimeter", porque: "O perímetro (perimeter) é a borda: proteção contra DDoS e firewall na entrada da rede." }
         ]
       }
     },
@@ -122,12 +122,12 @@ window.MODULO = {
 </table></div>
 <div class="ponte">quando uma política do PingFederate ou do PingAccess decide pelo contexto (rede, dispositivo, risco) e não só pela senha, isso é "verify explicitly".</div>`,
       checagem: {
-        q: "Uma empresa divide a rede em segmentos pequenos para que um invasor numa máquina não alcance as outras. Qual princípio do Zero Trust é esse?",
+        q: "A company splits its network into small segments so that an attacker on one machine cannot reach the others. Which Zero Trust principle is this?",
         opcoes: [
-          { t: "Assume breach", ok: true, porque: "Segmentar para limitar o estrago parte da ideia de que a invasão vai acontecer." },
-          { t: "Verify explicitly", porque: "Verify explicitly é sobre usar todos os sinais na hora de autenticar e autorizar." },
-          { t: "Use least privileged access", porque: "Least privilege limita as permissões de cada identidade; a segmentação de rede é a resposta a 'assume breach'." },
-          { t: "Defense in depth", porque: "Defesa em profundidade é outro conceito, não um dos três princípios do Zero Trust." }
+          { t: "Assume breach", ok: true, porque: "Segmentar para limitar o estrago parte da ideia de que a invasão vai acontecer (assume breach)." },
+          { t: "Verify explicitly", porque: "Verificar explicitamente (verify explicitly) é usar todos os sinais na hora de autenticar e autorizar." },
+          { t: "Use least privileged access", porque: "Privilégio mínimo (least privileged access) limita as permissões de cada identidade; segmentar a rede é a resposta a 'assume breach'." },
+          { t: "Defense in depth", porque: "Defesa em profundidade (defense in depth) é outro conceito, não um dos três princípios do Zero Trust." }
         ]
       }
     },
@@ -150,12 +150,12 @@ window.MODULO = {
 <div class="nota">Materiais mais antigos falam em <b>seis</b> pilares: os de 1 a 6. O sétimo é o que integra os outros. Se aparecer "six foundational pillars" numa pergunta, a lista é a de 1 a 6.</div>
 <div class="prova-dica">Identities é o pilar que costuma ser chamado de <b>plano de controle</b>. É por isso que se diz que a identidade é o novo perímetro (parte 1.2).</div>`,
       checagem: {
-        q: "Qual destes NÃO é um pilar do Zero Trust na lista da Microsoft?",
+        q: "Which of the following is NOT one of Microsoft's Zero Trust pillars?",
         opcoes: [
           { t: "Firewalls", ok: true, porque: "Firewall é uma ferramenta, não um pilar. Os pilares são identities, devices, applications, data, infrastructure, networks e visibility/automation/orchestration." },
-          { t: "Devices", porque: "Devices é um pilar: a saúde e a conformidade do dispositivo entram na decisão." },
-          { t: "Data", porque: "Data é um pilar: classificar, rotular e criptografar." },
-          { t: "Identities", porque: "Identities é o primeiro pilar e o plano de controle principal." }
+          { t: "Devices", porque: "Dispositivos (devices) é um pilar: a saúde e a conformidade do dispositivo entram na decisão." },
+          { t: "Data", porque: "Dados (data) é um pilar: classificar, rotular e criptografar." },
+          { t: "Identities", porque: "Identidades (identities) é o primeiro pilar e o plano de controle principal (primary control plane)." }
         ]
       }
     },
@@ -190,12 +190,12 @@ window.MODULO = {
 <p><b>Gestão de chaves:</b> guardar a chave longe do dado, usar <span class="termo">HSM</span> (hardware à prova de violação), fazer rotação e controlar quem acessa. No Azure, o serviço para isso é o <b>Azure Key Vault</b> (aparece no domínio 3).</p>
 <div class="prova-dica"><b>In use</b> é o estado novo: proteger o dado enquanto ele é processado, inclusive do sistema operacional e do hypervisor, com <b>enclaves seguros</b>.</div>`,
       checagem: {
-        q: "Um banco de dados no Azure fica criptografado no disco. Que estado do dado está protegido?",
+        q: "A database in Azure is encrypted on disk. Which state of data is being protected?",
         opcoes: [
-          { t: "At rest", ok: true, porque: "Dado guardado (disco, banco, storage) é dado em repouso." },
-          { t: "In transit", porque: "In transit é o dado passando pela rede, protegido por TLS ou VPN." },
-          { t: "In use", porque: "In use é o dado na memória durante o processamento." },
-          { t: "Hashing", porque: "Hash não é um estado do dado, e não dá para reverter: não serviria para guardar um banco que precisa ser lido." }
+          { t: "At rest", ok: true, porque: "Dado guardado (disco, banco, storage) é dado em repouso (at rest)." },
+          { t: "In transit", porque: "Dado em trânsito (in transit) é o que passa pela rede, protegido por TLS ou VPN." },
+          { t: "In use", porque: "Dado em uso (in use) é o que está na memória durante o processamento." },
+          { t: "Hashing", porque: "Hash não é um estado do dado e não pode ser revertido: não serviria para guardar um banco que precisa ser lido." }
         ]
       }
     },
@@ -218,12 +218,12 @@ window.MODULO = {
 <p><span class="termo">Assinatura digital</span>: o remetente assina com a chave <b>privada</b> e qualquer um confere com a chave <b>pública</b>. Garante <b>autenticidade</b> (veio de quem diz) e <b>integridade</b> (não foi alterado).</p>
 <div class="ponte">é exatamente o que acontece quando o PingFederate assina um token: assina com a chave privada, e o app confere com a pública (o JWKS que você já conhece).</div>`,
       checagem: {
-        q: "Por que se adiciona um salt antes de calcular o hash de uma senha?",
+        q: "Why is a salt added to a password before hashing it?",
         opcoes: [
-          { t: "Para que senhas iguais gerem hashes diferentes e as rainbow tables não funcionem", ok: true, porque: "O salt é único por senha, então o hash pré-calculado de uma senha comum não serve mais." },
-          { t: "Para permitir recuperar a senha original depois", porque: "Hash continua sendo só de ida, com ou sem salt." },
-          { t: "Para transformar o hash em criptografia simétrica", porque: "O salt não é chave e não muda a natureza do hash." },
-          { t: "Para deixar o hash menor", porque: "O tamanho do hash é fixo; o salt não muda isso." }
+          { t: "So identical passwords produce different hashes and rainbow tables don't work", ok: true, porque: "O salt é único por senha, então o hash pré-calculado de uma senha comum (rainbow table) não serve mais." },
+          { t: "So the original password can be recovered later", porque: "Hash continua sendo só de ida (one-way), com ou sem salt." },
+          { t: "To turn the hash into symmetric encryption", porque: "O salt não é chave (key) e não muda a natureza do hash." },
+          { t: "To make the hash shorter", porque: "O hash tem tamanho fixo (fixed-length); o salt não muda isso." }
         ]
       }
     },
@@ -249,12 +249,12 @@ window.MODULO = {
 </table></div>
 <div class="prova-dica">"compliance não é segurança". Cumprir uma norma é o mínimo exigido, não a garantia de estar protegido.</div>`,
       checagem: {
-        q: "Uma empresa contrata um seguro contra incidentes cibernéticos. Qual resposta ao risco é essa?",
+        q: "A company buys insurance against cyber incidents. Which risk response is this?",
         opcoes: [
-          { t: "Transfer", ok: true, porque: "O seguro passa o impacto financeiro para outra parte." },
-          { t: "Mitigate", porque: "Mitigar é reduzir a chance ou o impacto com controles. O seguro não reduz nada, só paga." },
-          { t: "Accept", porque: "Aceitar seria não fazer nada e arcar com o risco." },
-          { t: "Avoid", porque: "Evitar seria deixar de fazer a atividade que gera o risco." }
+          { t: "Transfer", ok: true, porque: "O seguro passa o impacto financeiro para outra parte: transferir (transfer)." },
+          { t: "Mitigate", porque: "Mitigar (mitigate) é reduzir a chance ou o impacto com controles. O seguro não reduz nada, só paga." },
+          { t: "Accept", porque: "Aceitar (accept) seria não fazer nada e arcar com o risco." },
+          { t: "Avoid", porque: "Evitar (avoid) seria deixar de fazer a atividade que gera o risco." }
         ]
       }
     },
@@ -274,11 +274,11 @@ window.MODULO = {
 <p class="surge d1">Um jeito de lembrar: <b>residency</b> = residência = endereço. <b>Sovereignty</b> = soberania = lei do país. <b>Privacy</b> = a pessoa dona do dado.</p>
 <div class="ponte">a LGPD é uma lei de <b>privacy</b>. Quando um cliente exige que os dados fiquem em datacenter no Brasil, isso é <b>residency</b>.</div>`,
       checagem: {
-        q: "Dados de clientes europeus guardados num datacenter da Alemanha ficam sujeitos às leis alemãs e da UE. Que conceito é esse?",
+        q: "Data about European customers stored in a German datacenter is subject to German and EU law. Which concept is this?",
         opcoes: [
-          { t: "Data sovereignty", ok: true, porque: "Soberania é a regra de que o dado segue a lei do lugar onde é coletado ou guardado." },
-          { t: "Data residency", porque: "Residency é sobre onde o dado fica. Aqui a pergunta é qual lei se aplica." },
-          { t: "Data privacy", porque: "Privacy trata do uso correto de dado pessoal, não de qual jurisdição vale." },
+          { t: "Data sovereignty", ok: true, porque: "Soberania de dados (data sovereignty) é a regra de que o dado segue a lei do lugar onde é coletado ou guardado." },
+          { t: "Data residency", porque: "Residência de dados (data residency) é sobre onde o dado fica. Aqui a pergunta é qual lei se aplica." },
+          { t: "Data privacy", porque: "Privacidade (data privacy) trata do uso correto de dado pessoal, não de qual jurisdição vale." },
           { t: "Zero Trust", porque: "Zero Trust é um modelo de segurança, nada a ver com jurisdição." }
         ]
       }
@@ -300,12 +300,12 @@ window.MODULO = {
 </div>
 <div class="prova-dica">os quatro pilares da identidade começam todos com "A". Na ISC2 era AAA (com Accounting); aqui é <b>Administration, Authentication, Authorization, Auditing</b>.</div>`,
       checagem: {
-        q: "Qual pilar da infraestrutura de identidade cuida de criar a conta de um funcionário novo e de desativá-la quando ele sai?",
+        q: "Which pillar of identity infrastructure covers creating a new employee's account and disabling it when they leave?",
         opcoes: [
-          { t: "Administration", ok: true, porque: "Criar, alterar e remover identidades (o ciclo de vida) é administration." },
-          { t: "Authentication", porque: "Authentication é provar a identidade no login, não criar a conta." },
-          { t: "Authorization", porque: "Authorization decide o que a identidade pode fazer, depois que ela existe." },
-          { t: "Auditing", porque: "Auditing registra e investiga o que aconteceu." }
+          { t: "Administration", ok: true, porque: "Criar, alterar e remover identidades (o ciclo de vida) é administração (administration)." },
+          { t: "Authentication", porque: "Autenticação (authentication) é provar a identidade no login, não criar a conta." },
+          { t: "Authorization", porque: "Autorização (authorization) decide o que a identidade pode fazer, depois que ela existe." },
+          { t: "Auditing", porque: "Auditoria (auditing) registra e investiga o que aconteceu." }
         ]
       }
     },
@@ -331,12 +331,12 @@ window.MODULO = {
 <p><span class="termo">Single sign-on (SSO)</span>: entra uma vez e acessa todos os apps que confiam no mesmo IdP. Benefícios: menos senhas, melhor experiência e controle central (desativou a conta, perdeu o acesso a tudo).</p>
 <div class="ponte">o PingFederate é um IdP. No mundo Microsoft, o IdP é o <b>Microsoft Entra ID</b>. Outros que o Learn cita: Google, Amazon, LinkedIn, GitHub.</div>`,
       checagem: {
-        q: "Qual é o principal benefício do single sign-on?",
+        q: "What is the main benefit of single sign-on (SSO)?",
         opcoes: [
-          { t: "O usuário se autentica uma vez e acessa vários aplicativos", ok: true, porque: "É a definição de SSO: uma credencial, um login, vários apps que confiam no mesmo IdP." },
-          { t: "Elimina a necessidade de autorização", porque: "Cada app continua decidindo o que o usuário pode fazer." },
-          { t: "Substitui o MFA", porque: "SSO e MFA se combinam; um não substitui o outro." },
-          { t: "Faz a senha nunca expirar", porque: "A política de senha não tem relação com SSO." }
+          { t: "Users sign in once and access multiple applications", ok: true, porque: "É a definição de SSO: um login, vários apps que confiam no mesmo provedor de identidade (identity provider)." },
+          { t: "It removes the need for authorization", porque: "Cada app continua decidindo o que o usuário pode fazer (authorization)." },
+          { t: "It replaces multifactor authentication", porque: "SSO e MFA se combinam; um não substitui o outro." },
+          { t: "Passwords never expire", porque: "A política de senha (password policy) não tem relação com SSO." }
         ]
       }
     },
@@ -359,12 +359,12 @@ window.MODULO = {
 <p><span class="termo">Hybrid identity</span>: sincronizar o AD DS com o Entra ID para a pessoa usar a mesma credencial nos dois lados. Detalhes no módulo 2.</p>
 <div class="ponte">o PingDirectory também é um directory service (LDAP). O AD DS é o equivalente da Microsoft para a rede interna.</div>`,
       checagem: {
-        q: "Uma empresa precisa de um serviço de identidade que funcione para apps SaaS e para usuários remotos sem VPN. O que atende melhor?",
+        q: "A company needs an identity service that works for SaaS apps and for remote users without a VPN. Which option fits BEST?",
         opcoes: [
-          { t: "Microsoft Entra ID", ok: true, porque: "É o IdP em nuvem: suporta SaaS, protocolos modernos e não depende de VPN." },
-          { t: "Active Directory Domain Services sozinho", porque: "O AD DS não autentica SaaS nativamente e exige VPN para usuários remotos." },
-          { t: "Mais um domain controller", porque: "Outro DC continua sendo AD DS on-premises, com as mesmas limitações." },
-          { t: "Group Policy", porque: "Group Policy configura máquinas Windows no domínio. Não é um IdP." }
+          { t: "Microsoft Entra ID", ok: true, porque: "É o provedor de identidade em nuvem: suporta SaaS, protocolos modernos e não depende de VPN." },
+          { t: "Active Directory Domain Services on its own", porque: "O AD DS não autentica SaaS nativamente e exige VPN para usuários remotos." },
+          { t: "An additional domain controller", porque: "Outro controlador de domínio (domain controller) continua sendo AD DS on-premises, com as mesmas limitações." },
+          { t: "Group Policy", porque: "Group Policy configura máquinas Windows no domínio. Não é um provedor de identidade (IdP)." }
         ]
       }
     },
@@ -394,12 +394,12 @@ window.MODULO = {
 </ul>
 <div class="ponte">uma conexão SAML entre o PingFederate e um parceiro é federação: o SP confia nas asserções do IdP.</div>`,
       checagem: {
-        q: "A organização A configurou federação confiando na organização B. O que isso permite?",
+        q: "Organization A has set up federation trusting Organization B. What does this allow?",
         opcoes: [
-          { t: "Usuários de B acessam recursos de A com a conta de B", ok: true, porque: "Quem confia (A) aceita a autenticação feita por B." },
-          { t: "Usuários de A acessam recursos de B automaticamente", porque: "A confiança não é automaticamente nos dois sentidos. Isso exigiria B confiar em A." },
-          { t: "As contas de B são copiadas para o diretório de A", porque: "Federação existe justamente para não precisar copiar ou criar contas." },
-          { t: "As duas organizações passam a ter um único IdP", porque: "Cada uma mantém o seu IdP. Só existe uma relação de confiança entre eles." }
+          { t: "Users from B access A's resources with their B accounts", ok: true, porque: "Quem confia (A) aceita a autenticação feita por B." },
+          { t: "Users from A access B's resources automatically", porque: "A confiança (trust) não é automaticamente nos dois sentidos. Isso exigiria B confiar em A." },
+          { t: "B's accounts are copied into A's directory", porque: "Federação existe justamente para não precisar copiar ou criar contas." },
+          { t: "Both organizations now share a single identity provider", porque: "Cada uma mantém o seu provedor de identidade (IdP). Só existe uma relação de confiança entre eles." }
         ]
       }
     }
