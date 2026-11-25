@@ -98,7 +98,8 @@
     const meta = todosModulos().find((m) => m.id === id && m.pronto);
     if (!meta) { mostrarErro("Módulo não encontrado. Volte ao início e escolha um módulo."); return; }
     const s = document.createElement("script");
-    s.src = "conteudo/" + meta.arquivo;
+    // ?v= evita que o navegador use uma cópia antiga do conteúdo (o GitHub Pages permite cache de 10 min).
+    s.src = "conteudo/" + meta.arquivo + "?v=" + Date.now();
     s.onload = () => {
       if (!window.MODULO) { mostrarErro("O arquivo do módulo não definiu window.MODULO."); return; }
       M = window.MODULO; M.id = meta.id;
